@@ -33,13 +33,13 @@ const get = async (ctx) => {
     if (authorizationToken) {
       ctx.body = await UserService.findUser(authorizationToken);
       ctx.status = 200;
-      logger.log('debug', ctx.body);
+      logger.log('debug', JSON.stringify(ctx.body));
     }
   } catch (err) {
     ctx.status = 500;
     logger.log('error', err);
   }
-}
+};
 
 export default {
   signIn,

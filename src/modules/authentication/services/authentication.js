@@ -13,7 +13,7 @@ const createUser = async (userData) => {
     const token = jwtService.getToken(userData);
     User.create({ ...userData });
     return {
-      data: token,
+      token,
     };
   }
 
@@ -23,9 +23,10 @@ const createUser = async (userData) => {
 const authenticateUser = async ctx => passport.authenticate('local', (err, user) => {
   if (user) {
     const token = jwtService.getToken(ctx.request.body);
-    ctx.body = { data: token, user };
+    user.password = undefined;
+    ctx.body = { token, user };
   } else {
-    ctx.body = { data: false, error: err };
+    ctx.body = { token: false, error: err };
     ctx.status = 401;
   }
 })(ctx);
@@ -33,6 +34,7 @@ const authenticateUser = async ctx => passport.authenticate('local', (err, user)
 const findUser = async (token) => {
   const user = jwtService.verify(token);
   const foundUser = await User.findOne({
+    attributes: { exclude: ['password'] },
     where: { email: user.email },
   });
 

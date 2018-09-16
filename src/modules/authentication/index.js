@@ -6,6 +6,6 @@ const router = new Router({ prefix: '/auth' });
 router
   .post('/signin', AuthController.signIn)
   .post('/signup', AuthController.signUp)
-  .get('/private', AuthController.get);
+  .post('/private', AuthController.get);
 
 export default router.routes();
