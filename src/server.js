@@ -1,13 +1,8 @@
 import http from 'http';
-import Sequelize from 'sequelize';
 import app from './app';
 import config from './config';
 import logger from './utils/logger';
-
-const sequelize = new Sequelize('jobzdb', 'root', 'm8463854', {
-  host: 'localhost',
-  dialect: 'mysql',
-});
+import sequelize from './helpers/database';
 
 sequelize.sync()
   .then(() => {

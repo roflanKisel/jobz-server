@@ -5,6 +5,7 @@ import views from 'koa-views';
 import session from 'koa-session';
 import passport from 'koa-passport';
 import config from '../config';
+import '../modules/authentication/strategy/strategy';
 
 export default (app) => {
   app.use(cors());

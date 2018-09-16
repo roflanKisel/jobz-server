@@ -8,7 +8,7 @@ const env = {
   },
 };
 
-const VIEW_PATH = `${path.resolve('.')}/app/views`;
+const VIEW_PATH = `${path.resolve('.')}/src/views`;
 
 export default {
   env,
