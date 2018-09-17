@@ -14,6 +14,7 @@ const createUser = async (userData) => {
     User.create({ ...userData });
     return {
       token,
+      user: { ...userData, password: undefined },
     };
   }
 
