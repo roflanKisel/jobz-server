@@ -60,7 +60,6 @@ describe('Authentication', () => {
       });
 
       User.findOne.restore();
-      jwtService.getToken.restore();
     });
 
     it('throws an error if user not found', async () => {
@@ -73,6 +72,73 @@ describe('Authentication', () => {
       }
 
       User.findOne.restore();
+    });
+  });
+
+  describe('deleteUserUsingToken', () => {
+    afterEach(() => {
+      User.findOne.restore();
+    });
+
+    it('delete user by token', async () => {
+      sinon.stub(User, 'findOne').resolves({
+        destroy: () => ({}),
+      });
+
+      const deletedUser = await AuthenticationService.deleteUserUsingToken();
+      assert.ok(deletedUser);
+    });
+
+    it('throws an error if token is invalid', async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+
+      try {
+        await AuthenticationService.deleteUserUsingToken();
+      } catch (err) {
+        assert.equal(err, 'Error: Error deleting user')
+      }
+    });
+  });
+
+  describe('deleteUserUsingId', () => {
+    afterEach(() => {
+      User.findOne.restore();
+    });
+
+    it('delete user using id', async () => {
+      sinon.stub(User, 'findOne')
+        .onFirstCall().resolves({})
+        .onSecondCall().resolves({
+          destroy: () => ({}),
+        });
+
+      const deletedUser = await AuthenticationService.deleteUserUsingId();
+
+      assert.ok(deletedUser);
+    });
+
+    it('should throw an error if user with id not found', async () => {
+      sinon.stub(User, 'findOne')
+        .onFirstCall().resolves({})
+        .onSecondCall().resolves(null);
+
+      try {
+        await AuthenticationService.deleteUserUsingId('token', '3');
+      } catch (err) {
+        assert.equal(err, 'Error: User with id: 3 not found');
+      }
+    });
+
+    it('sohuld throw an error if action provided by not admin', async () => {
+      sinon.stub(User, 'findOne')
+        .onFirstCall().resolves(null)
+        .onSecondCall().resolves(null);
+
+      try {
+        await AuthenticationService.deleteUserUsingId();
+      } catch (err) {
+        assert.equal(err, 'Error: Permission denied');
+      }
     });
   });
 });
