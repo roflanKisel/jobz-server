@@ -75,6 +75,32 @@ describe('Authentication', () => {
     });
   });
 
+  describe('findUserById', () => {
+    afterEach(() => {
+      User.findOne.restore();
+    });
+
+    it('returns found user data', async () => {
+      sinon.stub(User, 'findOne').resolves({ data: 'test' });
+
+      const userData = await AuthenticationService.findUserById('3');
+
+      assert.deepEqual(userData, {
+        data: 'test',
+      });
+    });
+
+    it('throws an error if user by provided id not found', async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+
+      try {
+        await AuthenticationService.findUserById('54');
+      } catch (err) {
+        assert.equal(err, 'Error: User with id: 54 not found');
+      }
+    });
+  });
+
   describe('deleteUserUsingToken', () => {
     afterEach(() => {
       User.findOne.restore();

@@ -46,6 +46,19 @@ const findUser = async (token) => {
   }
 };
 
+const findUserById = async (id) => {
+  const foundUser = await User.findOne({
+    attributes: { exclude: ['password'] },
+    where: { id },
+  });
+
+  if (!foundUser) {
+    throw new Error(`User with id: ${id} not found`);
+  }
+
+  return foundUser;
+};
+
 const deleteUserUsingToken = async (token) => {
   const user = jwtService.verify(token);
   const foundUser = await User.findOne({
@@ -89,6 +102,7 @@ export default {
   createUser,
   authenticateUser,
   findUser,
+  findUserById,
   deleteUserUsingToken,
   deleteUserUsingId,
 };
