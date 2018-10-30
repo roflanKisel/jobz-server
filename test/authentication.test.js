@@ -1,54 +1,78 @@
+import sinon from 'sinon';
 import assert from 'assert';
-import { describe, it, beforeEach, afterEach } from 'mocha';
+import { User } from '../src/models';
 import AuthenticationService from '../src/modules/authentication/services/authentication';
-
-const sandbox = require('sinon').createSandbox();
+import jwtService from '../src/modules/authentication/services/jwt-service';
 
 describe('Authentication', () => {
-  beforeEach(() => {
-    sandbox.stub(AuthenticationService, 'createUser')
-      .returns({
-        token: 'test-token',
+  let jwtStub, jwtVerify;
+
+  before(() => {
+    jwtStub = sinon.stub(jwtService, 'getToken').returns('token');
+    jwtVerify = sinon.stub(jwtService, 'verify').returns({});
+  });
+
+  after(() => {
+    jwtStub.restore();
+    jwtVerify.restore();
+  });
+
+  describe('createUser', () => {
+    it('creates a user and returns user data', async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+      sinon.stub(User, 'create').resolves();
+
+      const userData = await AuthenticationService.createUser({ email: 'email' });
+
+      assert.deepEqual(userData, {
+        token: 'token',
         user: {
-          id: 4,
-          email: 'test@test.test',
-          name: 'test',
-          birthday: new Date('2000-02-20'),
+          email: 'email',
+          password: undefined,
         },
       });
+
+      User.findOne.restore();
+      User.create.restore();
+    });
+
+    it('throws an error if user is already exists', async () => {
+      sinon.stub(User, 'findOne').resolves({});
+
+      try {
+        await AuthenticationService.createUser({ email: 'email' })
+      } catch (err) {
+        assert.equal(err, 'Error: User is already exist');
+      }
+
+      User.findOne.restore();
+    });
   });
 
-  afterEach(() => {
-    sandbox.restore();
-  });
+  describe('findUser', () => {
+    it('find a user by token', async () => {
+      sinon.stub(User, 'findOne').resolves({ user: 'test' });
 
-  it('should create user', () => {
-    const userData = AuthenticationService.createUser();
-    const testData = {
-      token: 'test-token',
-      user: {
-        id: 4,
-        email: 'test@test.test',
-        name: 'test',
-        birthday: new Date('2000-02-20'),
-      },
-    };
+      const foundUser = await AuthenticationService.findUser();
 
-    assert.deepEqual(userData, testData);
-  });
+      assert.deepEqual(foundUser, {
+        user: 'test',
+      });
 
-  it('should create user', () => {
-    const userData = AuthenticationService.createUser();
-    const testData = {
-      token: 'test-token-failure',
-      user: {
-        id: 4,
-        email: 'test@test.test',
-        name: 'test',
-        birthday: new Date('2000-02-20'),
-      },
-    };
+      User.findOne.restore();
+      jwtService.getToken.restore();
+    });
 
-    assert.notDeepEqual(userData, testData);
+    it('throws an error if user not found', async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+
+      try {
+        await AuthenticationService.findUser();
+      } catch (err) {
+        assert.equal(err, 'Error: User is not found');
+      }
+
+      User.findOne.restore();
+    });
   });
 });
