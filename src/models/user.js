@@ -26,6 +26,11 @@ const User = sequelize.define('user', {
     type: Sequelize.DATEONLY,
     allowNull: false,
   },
+  role: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'default',
+  },
   // TODO: add fields: resume, avatar
 });
 
