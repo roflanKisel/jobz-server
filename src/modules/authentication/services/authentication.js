@@ -46,17 +46,32 @@ const findUser = async (token) => {
   return foundUser;
 };
 
+const findUserById = async (id) => {
+  const foundUser = await User.findOne({
+    attributes: { exclude: ['password'] },
+    where: { id },
+  });
+
+  if (!foundUser) {
+    throw new Error(`User with id: ${id} not found`);
+  }
+
+  return foundUser;
+};
+
 const deleteUserUsingToken = async (token) => {
   const user = jwtService.verify(token);
   const foundUser = await User.findOne({
-    where: { email: user.email },
+    where: {
+      email: user.email,
+    },
   });
 
   if (foundUser) {
     return foundUser.destroy();
   }
 
-  throw new Error('Error in deleting user');
+  throw new Error('Error deleting user');
 };
 
 const deleteUserUsingId = async (token, id) => {
@@ -77,7 +92,7 @@ const deleteUserUsingId = async (token, id) => {
       return user.destroy();
     }
 
-    throw new Error(`User with id ${id} not found`);
+    throw new Error(`User with id: ${id} not found`);
   }
 
   throw new Error('Permission denied');
@@ -87,6 +102,7 @@ export default {
   createUser,
   authenticateUser,
   findUser,
+  findUserById,
   deleteUserUsingToken,
   deleteUserUsingId,
 };
