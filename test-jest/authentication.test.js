@@ -49,7 +49,7 @@ describe('Authentication', () => {
   });
 
   describe('findUser', () => {
-    it('find a user by token', async () => {
+    it('finds user by token', async () => {
       sinon.stub(User, 'findOne').resolves({ user: 'test' });
 
       const foundUser = await AuthenticationService.findUser();
@@ -106,7 +106,7 @@ describe('Authentication', () => {
       User.findOne.restore();
     });
 
-    it('delete user by token', async () => {
+    it('deletes user by token', async () => {
       sinon.stub(User, 'findOne').resolves({
         destroy: () => ({}),
       });
@@ -132,7 +132,7 @@ describe('Authentication', () => {
       User.findOne.restore();
     });
 
-    it('delete user using id', async () => {
+    it('deletes user using id', async () => {
       sinon.stub(User, 'findOne')
         .onFirstCall().resolves({})
         .onSecondCall().resolves({
@@ -144,7 +144,7 @@ describe('Authentication', () => {
       expect(deletedUser).toBeTruthy();
     });
 
-    it('should throw an error if user with id not found', async () => {
+    it('throws an error if user with id not found', async () => {
       sinon.stub(User, 'findOne')
         .onFirstCall().resolves({})
         .onSecondCall().resolves(null);
@@ -156,7 +156,7 @@ describe('Authentication', () => {
       }
     });
 
-    it('sohuld throw an error if action provided by not admin', async () => {
+    it('throws an error if action provided by not admin', async () => {
       sinon.stub(User, 'findOne')
         .onFirstCall().resolves(null)
         .onSecondCall().resolves(null);
