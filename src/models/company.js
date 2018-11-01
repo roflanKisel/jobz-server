@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 import sequelize from '../helpers/database';
-import Company from './company';
+import Vacancy from './vacancy';
 
-const User = sequelize.define('user', {
+const Company = sequelize.define('company', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -10,35 +10,34 @@ const User = sequelize.define('user', {
     primaryKey: true,
     autoIncrement: true,
   },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
   name: {
     type: Sequelize.STRING,
+    unique: true,
     allowNull: false,
   },
-  birthday: {
-    type: Sequelize.DATEONLY,
-    allowNull: false,
-  },
-  role: {
+  address: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'default',
   },
-  // TODO: add fields: resume, avatar
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  pending: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
-User.hasMany(Company, {
-  as: 'Companies',
+Company.hasMany(Vacancy, {
+  as: 'Vacancies',
   foreignKey: { allowNull: false },
   onDelete: 'CASCADE',
 });
 
-export default User;
+export default Company;
