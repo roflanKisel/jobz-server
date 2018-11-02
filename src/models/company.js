@@ -41,7 +41,7 @@ const Company = sequelize.define('company', {
 
 Company.hasMany(Vacancy, {
   as: 'Vacancies',
-  foreignKey: { allowNull: false },
+  foreignKey: 'companyId',
   onDelete: 'CASCADE',
 });
 

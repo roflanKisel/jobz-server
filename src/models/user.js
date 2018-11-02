@@ -35,10 +35,4 @@ const User = sequelize.define('user', {
   // TODO: add fields: resume, avatar
 });
 
-User.hasMany(Company, {
-  as: 'Companies',
-  foreignKey: { allowNull: false },
-  onDelete: 'CASCADE',
-});
-
 export default User;

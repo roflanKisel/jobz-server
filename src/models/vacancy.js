@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import { Company } from './company';
 import sequelize from '../helpers/database';
 
 const Vacancy = sequelize.define('vacancy', {

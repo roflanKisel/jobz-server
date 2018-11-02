@@ -1,13 +1,18 @@
 import logger from '../../../utils/logger';
-import { Vacancy } from '../../../models';
+import { Vacancy, Company } from '../../../models';
 import VacancyService from '../services/vacancy-service';
 
 const getVacancies = async (ctx) => {
   try {
     logger.log('debug', 'in getVacancies');
-    ctx.body = await Vacancy.findAll();
+    ctx.body = await Vacancy.findAll({
+      include: [{
+        model: Company,
+      }],
+    });
   } catch (err) {
     logger.log('error', 'error in getVacancies');
+    logger.log('error', err);
   }
 };
 
