@@ -17,6 +17,16 @@ const Vacancy = sequelize.define('vacancy', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: null,
+  },
+  approved: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
   description: {
     type: Sequelize.STRING,
     allowNull: false,

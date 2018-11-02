@@ -27,10 +27,15 @@ const Company = sequelize.define('company', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  pending: {
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: null,
+  },
+  approved: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
 });
 
