@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
 import sequelize from '../helpers/database';
-import Vacancy from './vacancy';
 
 const Company = sequelize.define('company', {
   id: {
@@ -37,12 +36,6 @@ const Company = sequelize.define('company', {
     allowNull: false,
     defaultValue: false,
   },
-});
-
-Company.hasMany(Vacancy, {
-  as: 'Vacancies',
-  foreignKey: 'companyId',
-  onDelete: 'CASCADE',
 });
 
 export default Company;
