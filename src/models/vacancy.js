@@ -1,8 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from '../helpers/database';
-import Company from './company';
 
-const User = sequelize.define('user', {
+const Vacancy = sequelize.define('vacancy', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -10,29 +9,28 @@ const User = sequelize.define('user', {
     primaryKey: true,
     autoIncrement: true,
   },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
+  employeePosition: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  name: {
+  estimatedSalary: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  birthday: {
-    type: Sequelize.DATEONLY,
-    allowNull: false,
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: null,
   },
-  role: {
+  approved: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  description: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'default',
   },
-  // TODO: add fields: resume, avatar
 });
 
-export default User;
+export default Vacancy;
