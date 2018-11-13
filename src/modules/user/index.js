@@ -8,6 +8,7 @@ router
   .get('/', UserController.getUsers)
   .param('id', findUser)
   .get('/:id/companies', UserController.getUserCompanies)
+  .get(':id/vacancies', UserController.getUserVacancies)
   .put('/:id', UserController.updateUser)
   .delete('/:id', UserController.deleteUser);
 

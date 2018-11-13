@@ -1,4 +1,4 @@
-import { User, Company } from '../../../models';
+import { Company, Vacancy } from '../../../models';
 
 const getUserCompanies = async (id) => {
   const companies = await Company.findAll({
@@ -8,6 +8,16 @@ const getUserCompanies = async (id) => {
   });
 
   return companies;
+};
+
+const getUserVacancies = async (id) => {
+  const vacancies = await Vacancy.findAll({
+    where: {
+      userId: id,
+    },
+  });
+
+  return vacancies;
 };
 
 const updateUser = async () => {
@@ -20,6 +30,7 @@ const deleteUser = async () => {
 
 export default {
   getUserCompanies,
+  getUserVacancies,
   updateUser,
   deleteUser,
 };

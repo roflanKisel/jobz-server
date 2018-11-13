@@ -22,6 +22,15 @@ const getUserCompanies = async (ctx) => {
   }
 };
 
+const getUserVacancies = async (ctx) => {
+  try {
+    logger.log('debug', 'in getUserVacancies');
+    ctx.body = await UserService.getUserVacancies(ctx.user.id);
+  } catch (err) {
+    logger.log('error', 'error in getUserVacancies');
+  }
+};
+
 const updateUser = async (ctx) => {
   logger.log('debug', `${JSON.stringify(ctx.company)}`);
 };
@@ -33,6 +42,7 @@ const deleteUser = async (ctx) => {
 export default {
   getUsers,
   getUserCompanies,
+  getUserVacancies,
   updateUser,
   deleteUser,
 };
