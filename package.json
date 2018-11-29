@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./src/server.js",
-    "test": "mocha --require babel-core/register ./test/*",
-    "jest": "jest ./test-jest/*"
+    "test:mocha": "mocha --require babel-core/register ./test/*",
+    "test": "jest ./test/*"
   },
   "repository": {
     "type": "git",
