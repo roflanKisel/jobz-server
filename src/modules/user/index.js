@@ -6,10 +6,11 @@ const router = new Router({ prefix: '/users' });
 
 router
   .get('/', UserController.getUsers)
-  .param('id', findUser)
-  .get('/:id/companies', UserController.getUserCompanies)
-  .get(':id/vacancies', UserController.getUserVacancies)
-  .put('/:id', UserController.updateUser)
+  // .param('id', findUser)
+  // .get('/:id/companies', UserController.getUserCompanies)
+  // .get('/:id/vacancies', UserController.getUserVacancies)
+  .get('/:id/vacancies/favorites', UserController.getUserFavoriteVacancies)
+  .post('/:id/vacancies/favorites', UserController.addUserFavoriteVacancy)
   .delete('/:id', UserController.deleteUser);
 
 export default router.routes();

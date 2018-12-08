@@ -16,6 +16,11 @@ const getVacancies = async (ctx) => {
   }
 };
 
+const getVacancy = async (ctx) => {
+  logger.log('debug', 'get one vacancy');
+  ctx.body = ctx.vacancy;
+};
+
 const addVacancy = async (ctx) => {
   try {
     logger.log('debug', 'creating vacancy');
@@ -36,6 +41,7 @@ const deleteVacancy = async (ctx) => {
 export default {
   getVacancies,
   addVacancy,
+  getVacancy,
   updateVacancy,
   deleteVacancy,
 };

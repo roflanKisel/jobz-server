@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
 import sequelize from '../helpers/database';
-import Company from './company';
 
 const User = sequelize.define('user', {
   id: {

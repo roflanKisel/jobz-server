@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger';
-import { User } from '../../../models';
+import { User, UserVacancies, Vacancy } from '../../../models';
 import UserService from '../services/user-service';
 
 const getUsers = async (ctx) => {
@@ -39,10 +39,47 @@ const deleteUser = async (ctx) => {
   logger.log('debug', `${JSON.stringify(ctx.company)}`);
 };
 
+const getUserFavoriteVacancies = async (ctx) => {
+  logger.log('debug', 'get user favorites');
+
+  try {
+    const firstQuery = {
+      where: {
+        userId: ctx.params.id,
+      },
+    };
+
+    const data = await UserVacancies.findAll(firstQuery);
+    const vacancies = data.map(dataPart => Vacancy.findById(dataPart.vacancyId));
+
+    ctx.body = await Promise.all(vacancies);
+  } catch (err) {
+    logger.log('error', 'error getting favorite vacancies');
+  }
+};
+
+const addUserFavoriteVacancy = async (ctx) => {
+  logger.log('debug', 'adding favorute vacancy to user');
+
+  try {
+    const { vacancyId } = ctx.request.body;
+    const { id } = ctx.params;
+
+    ctx.body = await UserVacancies.create({
+      userId: parseInt(id, 10),
+      vacancyId,
+    });
+  } catch (err) {
+    logger.log('error', 'error adding favorite user vacancy');
+  }
+};
+
 export default {
   getUsers,
   getUserCompanies,
   getUserVacancies,
   updateUser,
   deleteUser,
+  getUserFavoriteVacancies,
+  addUserFavoriteVacancy,
 };

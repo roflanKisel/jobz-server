@@ -1,6 +1,7 @@
 import User from './user';
 import Company from './company';
 import Vacancy from './vacancy';
+import UserVacancies from './user-vacancy';
 
 User.hasMany(Company, {
   foreignKey: 'userId',
@@ -24,4 +25,5 @@ export {
   User,
   Company,
   Vacancy,
+  UserVacancies,
 };

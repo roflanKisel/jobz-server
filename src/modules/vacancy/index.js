@@ -8,6 +8,7 @@ router
   .get('/', VacancyController.getVacancies)
   .post('/', VacancyController.addVacancy)
   .param('id', findVacancy)
+  .get('/:id', VacancyController.getVacancy)
   .put('/:id', VacancyController.updateVacancy)
   .delete('/:id', VacancyController.deleteVacancy);
 

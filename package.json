@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./src/server.js",
+    "dev": "nodemon ./src/server.js --exec babel-node",
     "test:mocha": "mocha --require babel-core/register ./test/*",
     "test": "jest ./test/*"
   },
@@ -48,6 +49,7 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.7"
   }
 }
