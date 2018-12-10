@@ -59,7 +59,7 @@ const getUserFavoriteVacancies = async (ctx) => {
 };
 
 const addUserFavoriteVacancy = async (ctx) => {
-  logger.log('debug', 'adding favorute vacancy to user');
+  logger.log('debug', 'adding favorite vacancy to user');
 
   try {
     const { vacancyId } = ctx.request.body;
@@ -74,6 +74,32 @@ const addUserFavoriteVacancy = async (ctx) => {
   }
 };
 
+const removeUserFavoriteVacancy = async (ctx) => {
+  try {
+    const { vacancyId } = ctx.query;
+    const { id } = ctx.params;
+
+    const query = {
+      where: {
+        userId: id,
+        vacancyId,
+      },
+    };
+
+    const record = await UserVacancies.findOne(query);
+
+    if (record) {
+      record.destroy();
+    }
+
+    ctx.body = {
+      success: true,
+    };
+  } catch (err) {
+    logger.log('error', 'error removing favorite user vacancy');
+  }
+};
+
 export default {
   getUsers,
   getUserCompanies,
@@ -82,4 +108,5 @@ export default {
   deleteUser,
   getUserFavoriteVacancies,
   addUserFavoriteVacancy,
+  removeUserFavoriteVacancy,
 };
