@@ -16,7 +16,7 @@ const getUsers = async (ctx) => {
 const getUserCompanies = async (ctx) => {
   try {
     logger.log('debug', 'in getUserCompanies');
-    ctx.body = await UserService.getUserCompanies(ctx.user.id);
+    ctx.body = await UserService.getUserCompanies(ctx.params.id);
   } catch (err) {
     logger.log('error', 'error in getUserCompanies');
   }
