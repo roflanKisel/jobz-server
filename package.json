@@ -6,8 +6,11 @@
   "scripts": {
     "start": "babel-node ./src/server.js",
     "dev": "nodemon ./src/server.js --exec babel-node",
-    "test:mocha": "mocha --require babel-core/register ./test/*",
-    "test": "jest ./test/*"
+    "test": "jest ./test/*",
+    "test:integration": "jest ./test/integration/* --no-cache"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",

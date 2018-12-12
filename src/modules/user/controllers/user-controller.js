@@ -10,6 +10,7 @@ const getUsers = async (ctx) => {
     });
   } catch (err) {
     logger.log('error', 'error in getCompanies');
+    ctx.status = 500;
   }
 };
 
@@ -19,6 +20,7 @@ const getUserCompanies = async (ctx) => {
     ctx.body = await UserService.getUserCompanies(ctx.params.id);
   } catch (err) {
     logger.log('error', 'error in getUserCompanies');
+    ctx.status = 500;
   }
 };
 
@@ -28,6 +30,7 @@ const getUserVacancies = async (ctx) => {
     ctx.body = await UserService.getUserVacancies(ctx.user.id);
   } catch (err) {
     logger.log('error', 'error in getUserVacancies');
+    ctx.status = 500;
   }
 };
 
@@ -55,6 +58,7 @@ const getUserFavoriteVacancies = async (ctx) => {
     ctx.body = await Promise.all(vacancies);
   } catch (err) {
     logger.log('error', 'error getting favorite vacancies');
+    ctx.status = 500;
   }
 };
 
@@ -71,6 +75,7 @@ const addUserFavoriteVacancy = async (ctx) => {
     });
   } catch (err) {
     logger.log('error', 'error adding favorite user vacancy');
+    ctx.status = 409;
   }
 };
 
@@ -97,6 +102,7 @@ const removeUserFavoriteVacancy = async (ctx) => {
     };
   } catch (err) {
     logger.log('error', 'error removing favorite user vacancy');
+    ctx.status = 409;
   }
 };
 

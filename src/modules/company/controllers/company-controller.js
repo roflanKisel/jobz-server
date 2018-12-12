@@ -22,10 +22,22 @@ const addCompany = async (ctx) => {
 
 const updateCompany = async (ctx) => {
   logger.log('debug', `${JSON.stringify(ctx.company)}`);
+
+  try {
+    ctx.body = await CompanyService.updateCompany(ctx.company, ctx.request.body);
+  } catch (err) {
+    ctx.status = 500;
+  }
 };
 
 const deleteCompany = async (ctx) => {
   logger.log('debug', `${JSON.stringify(ctx.company)}`);
+
+  try {
+    ctx.body = await CompanyService.deleteCompany(ctx.company);
+  } catch (err) {
+    ctx.status = 500;
+  }
 };
 
 export default {

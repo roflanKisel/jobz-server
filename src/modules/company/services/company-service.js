@@ -6,12 +6,16 @@ const createCompany = async (companyData) => {
   return newCompany;
 };
 
-const updateCompany = async () => {
-  // TODO: implement company updating
+const updateCompany = async (company, data) => {
+  const updatedCompany = await company.update({ data });
+
+  return updatedCompany;
 };
 
-const deleteCompany = async () => {
-  // TODO: implement company deleting
+const deleteCompany = async (company) => {
+  const deletedCompany = await company.destroy();
+
+  return deletedCompany;
 };
 
 export default {
