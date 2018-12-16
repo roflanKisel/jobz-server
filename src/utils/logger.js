@@ -9,6 +9,7 @@ const loggerFormat = printf(info => `${info.timestamp} - ${info.level}: ${info.m
 
 export default winston.createLogger({
   level: config.env.MODE === 'production' ? 'warn' : 'debug',
+  silent: config.env.MODE === 'production',
   format: combine(
     colorize(),
     timestamp(),

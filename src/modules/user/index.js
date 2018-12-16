@@ -6,6 +6,7 @@ const router = new Router({ prefix: '/users' });
 
 router
   .get('/', UserController.getUsers)
+  .get('/:id', UserController.getUser)
   // .param('id', findUser)
   .get('/:id/companies', UserController.getUserCompanies)
   // .get('/:id/vacancies', UserController.getUserVacancies)

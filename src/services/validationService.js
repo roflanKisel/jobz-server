@@ -1,5 +1,5 @@
 const isValidEmail = (email) => {
-  if (email.length < 5 || email.length > 25) {
+  if (email.length < 7 || email.length > 25) {
     return false;
   }
 

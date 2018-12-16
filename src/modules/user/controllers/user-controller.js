@@ -2,6 +2,19 @@ import logger from '../../../utils/logger';
 import { User, UserVacancies, Vacancy } from '../../../models';
 import UserService from '../services/user-service';
 
+const getUser = async (ctx) => {
+  try {
+    logger.log('debug', 'in getCompanies');
+    ctx.body = await User.findOne({
+      where: { id: ctx.params.id },
+      attributes: { exclude: ['password'] },
+    });
+  } catch (err) {
+    logger.log('error', 'error in getCompanies');
+    ctx.status = 500;
+  }
+};
+
 const getUsers = async (ctx) => {
   try {
     logger.log('debug', 'in getCompanies');
@@ -107,6 +120,7 @@ const removeUserFavoriteVacancy = async (ctx) => {
 };
 
 export default {
+  getUser,
   getUsers,
   getUserCompanies,
   getUserVacancies,
