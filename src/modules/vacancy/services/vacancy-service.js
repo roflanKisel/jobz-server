@@ -6,16 +6,6 @@ const createVacancy = async (vacancyData) => {
   return newVacancy;
 };
 
-const updateVacancy = async () => {
-  // TODO: implement Vacancy updating
-};
-
-const deleteVacancy = async () => {
-  // TODO: implement Vacancy deleting
-};
-
 export default {
   createVacancy,
-  updateVacancy,
-  deleteVacancy,
 };
